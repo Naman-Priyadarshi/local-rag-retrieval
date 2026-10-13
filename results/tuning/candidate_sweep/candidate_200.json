@@ -1,0 +1,71 @@
+{
+  "dataset": "BEIR SciFact",
+  "qrels_split": "train",
+  "top_k": 10,
+  "candidate_k": 200,
+  "documents": 5183,
+  "queries_evaluated": 809,
+  "methods": {
+    "bm25plus": {
+      "model": "rank_bm25.BM25Plus",
+      "metrics": {
+        "nDCG@10": 0.6692195395129561,
+        "Recall@10": 0.7898434281005356,
+        "MRR@10": 0.6368792552043478,
+        "evaluated_queries": 809
+      },
+      "setup_seconds": 0.30034154200257035,
+      "cache_hit": false,
+      "mean_query_latency_ms": 7.527241446339362,
+      "p95_query_latency_ms": 12.404217000585048,
+      "configuration": {}
+    },
+    "dense": {
+      "model": "majentik/Qwen3-Embedding-0.6B-MLX-8bit",
+      "metrics": {
+        "nDCG@10": 0.7446886378176815,
+        "Recall@10": 0.8533374536464772,
+        "MRR@10": 0.7173955696823434,
+        "evaluated_queries": 809
+      },
+      "setup_seconds": 3.1639923750044545,
+      "cache_hit": true,
+      "mean_query_latency_ms": 27.278172800974527,
+      "p95_query_latency_ms": 32.33955800096736,
+      "configuration": {}
+    }
+  },
+  "fusion_runs": {
+    "bm25plus__dense__weighted_rrf": {
+      "fusion": "weighted_rrf",
+      "metrics": {
+        "nDCG@10": 0.7567035812633381,
+        "Recall@10": 0.8646683147919242,
+        "MRR@10": 0.7294666156532659,
+        "evaluated_queries": 809
+      },
+      "configuration": {
+        "sources": [
+          "bm25plus",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 200,
+        "weights": {
+          "bm25plus": 1.0,
+          "dense": 7.0
+        }
+      },
+      "mean_fusion_latency_ms": 0.12066800727788704,
+      "mean_end_to_end_query_latency_ms": 34.926082254591776
+    }
+  },
+  "notes": [
+    "Results are merged by method; rerunning one method does not erase unrelated method results.",
+    "Use the training split for weight tuning and the test split for final comparison.",
+    "Title-weighted BM25 independently min-max-normalizes title and abstract scores per query; default title weight is 0.35.",
+    "Weighted RRF uses weight 1.0 for the lexical/SPLADE source and --dense-weight for dense Qwen3 when present.",
+    "DBSF approximates distribution-based score fusion over each retriever's top candidate_k results, not full-corpus score distributions.",
+    "Dense query latency includes Qwen3 query embedding; fusion end-to-end latency adds the measured component query latencies and fusion overhead."
+  ]
+}

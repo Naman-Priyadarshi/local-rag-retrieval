@@ -1,0 +1,336 @@
+{
+  "dataset": "BEIR SciFact",
+  "qrels_split": "test",
+  "top_k": 10,
+  "candidate_k": 100,
+  "documents": 5183,
+  "queries_evaluated": 300,
+  "methods": {
+    "bm25": {
+      "model": "rank_bm25.BM25Okapi",
+      "metrics": {
+        "nDCG@10": 0.6518925893260478,
+        "Recall@10": 0.7739999999999999,
+        "MRR@10": 0.6186150793650793,
+        "evaluated_queries": 300
+      },
+      "setup_seconds": 0.49235495799803175,
+      "cache_hit": false,
+      "mean_query_latency_ms": 14.757019866859386,
+      "p95_query_latency_ms": 27.02714375409414,
+      "configuration": {}
+    },
+    "bm25l": {
+      "model": "rank_bm25.BM25L",
+      "metrics": {
+        "nDCG@10": 0.44480408533119886,
+        "Recall@10": 0.6202222222222222,
+        "MRR@10": 0.39288095238095244,
+        "evaluated_queries": 300
+      },
+      "setup_seconds": 0.48084958299295977,
+      "cache_hit": false,
+      "mean_query_latency_ms": 16.056809166863484,
+      "p95_query_latency_ms": 29.381722297330274,
+      "configuration": {}
+    },
+    "bm25plus": {
+      "model": "rank_bm25.BM25Plus",
+      "metrics": {
+        "nDCG@10": 0.6645590055425123,
+        "Recall@10": 0.7816111111111111,
+        "MRR@10": 0.6338783068783068,
+        "evaluated_queries": 300
+      },
+      "setup_seconds": 0.5000584999943385,
+      "cache_hit": false,
+      "mean_query_latency_ms": 15.389975809957832,
+      "p95_query_latency_ms": 29.026012496615298,
+      "configuration": {}
+    },
+    "title_weighted_bm25": {
+      "model": "FieldedBM25(okapi, title_weight=0.35)",
+      "metrics": {
+        "nDCG@10": 0.6212508117449715,
+        "Recall@10": 0.7606666666666666,
+        "MRR@10": 0.5858849206349206,
+        "evaluated_queries": 300
+      },
+      "setup_seconds": 0.518030125000223,
+      "cache_hit": false,
+      "mean_query_latency_ms": 24.112639193044743,
+      "p95_query_latency_ms": 41.73927149422526,
+      "configuration": {
+        "title_weight": 0.35
+      }
+    },
+    "dense": {
+      "model": "majentik/Qwen3-Embedding-0.6B-MLX-8bit",
+      "metrics": {
+        "nDCG@10": 0.7027748068956426,
+        "Recall@10": 0.834888888888889,
+        "MRR@10": 0.6659100529100529,
+        "evaluated_queries": 300
+      },
+      "setup_seconds": 2295.484814125004,
+      "cache_hit": false,
+      "mean_query_latency_ms": 44.966610686606145,
+      "p95_query_latency_ms": 65.25040980232008,
+      "configuration": {}
+    }
+  },
+  "fusion_runs": {
+    "bm25__dense__rrf": {
+      "fusion": "rrf",
+      "metrics": {
+        "nDCG@10": 0.70879880556105,
+        "Recall@10": 0.8215555555555556,
+        "MRR@10": 0.6787738095238095,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.24835291357400516,
+      "mean_end_to_end_query_latency_ms": 59.971983467039536
+    },
+    "bm25__dense__weighted_rrf": {
+      "fusion": "weighted_rrf",
+      "metrics": {
+        "nDCG@10": 0.7195107017797914,
+        "Recall@10": 0.8372222222222223,
+        "MRR@10": 0.6878875661375662,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100,
+        "weights": {
+          "bm25": 1.0,
+          "dense": 1.5
+        }
+      },
+      "mean_fusion_latency_ms": 0.0565448734171999,
+      "mean_end_to_end_query_latency_ms": 59.78017542688273
+    },
+    "bm25__dense__dbsf": {
+      "fusion": "dbsf",
+      "metrics": {
+        "nDCG@10": 0.7171210521734899,
+        "Recall@10": 0.831388888888889,
+        "MRR@10": 0.6852936507936509,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.10168231655067454,
+      "mean_end_to_end_query_latency_ms": 59.825312870016205
+    },
+    "title_weighted_bm25__dense__rrf": {
+      "fusion": "rrf",
+      "metrics": {
+        "nDCG@10": 0.6974126108892588,
+        "Recall@10": 0.825388888888889,
+        "MRR@10": 0.6609431216931217,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "title_weighted_bm25",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.7686773833120242,
+      "mean_end_to_end_query_latency_ms": 69.84792726296291
+    },
+    "title_weighted_bm25__dense__weighted_rrf": {
+      "fusion": "weighted_rrf",
+      "metrics": {
+        "nDCG@10": 0.7103632275079316,
+        "Recall@10": 0.8435555555555555,
+        "MRR@10": 0.6750992063492064,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "title_weighted_bm25",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100,
+        "weights": {
+          "title_weighted_bm25": 1.0,
+          "dense": 1.5
+        }
+      },
+      "mean_fusion_latency_ms": 0.05827024683336882,
+      "mean_end_to_end_query_latency_ms": 69.13752012648426
+    },
+    "title_weighted_bm25__dense__dbsf": {
+      "fusion": "dbsf",
+      "metrics": {
+        "nDCG@10": 0.7151483929290556,
+        "Recall@10": 0.8437222222222223,
+        "MRR@10": 0.6809642857142857,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "title_weighted_bm25",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.09254086003541791,
+      "mean_end_to_end_query_latency_ms": 69.1717907396863
+    },
+    "bm25l__dense__rrf": {
+      "fusion": "rrf",
+      "metrics": {
+        "nDCG@10": 0.6426045877108699,
+        "Recall@10": 0.7783333333333333,
+        "MRR@10": 0.6073994708994709,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25l",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.9292858301826831,
+      "mean_end_to_end_query_latency_ms": 61.95270568365231
+    },
+    "bm25l__dense__weighted_rrf": {
+      "fusion": "weighted_rrf",
+      "metrics": {
+        "nDCG@10": 0.6604942287113093,
+        "Recall@10": 0.7981666666666666,
+        "MRR@10": 0.6255238095238095,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25l",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100,
+        "weights": {
+          "bm25l": 1.0,
+          "dense": 1.5
+        }
+      },
+      "mean_fusion_latency_ms": 0.05230610666330904,
+      "mean_end_to_end_query_latency_ms": 61.075725960132935
+    },
+    "bm25l__dense__dbsf": {
+      "fusion": "dbsf",
+      "metrics": {
+        "nDCG@10": 0.6534248844418746,
+        "Recall@10": 0.7998333333333333,
+        "MRR@10": 0.6144510582010583,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25l",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.09089069678642166,
+      "mean_end_to_end_query_latency_ms": 61.11431055025605
+    },
+    "bm25plus__dense__rrf": {
+      "fusion": "rrf",
+      "metrics": {
+        "nDCG@10": 0.7112093150697807,
+        "Recall@10": 0.8312222222222222,
+        "MRR@10": 0.6780436507936508,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25plus",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.32074525343584054,
+      "mean_end_to_end_query_latency_ms": 60.677331749999816
+    },
+    "bm25plus__dense__weighted_rrf": {
+      "fusion": "weighted_rrf",
+      "metrics": {
+        "nDCG@10": 0.7157870390631154,
+        "Recall@10": 0.8327222222222223,
+        "MRR@10": 0.6839828042328042,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25plus",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100,
+        "weights": {
+          "bm25plus": 1.0,
+          "dense": 1.5
+        }
+      },
+      "mean_fusion_latency_ms": 0.055582240117170535,
+      "mean_end_to_end_query_latency_ms": 60.412168736681146
+    },
+    "bm25plus__dense__dbsf": {
+      "fusion": "dbsf",
+      "metrics": {
+        "nDCG@10": 0.7229780434712403,
+        "Recall@10": 0.8435555555555555,
+        "MRR@10": 0.6901402116402117,
+        "evaluated_queries": 300
+      },
+      "configuration": {
+        "sources": [
+          "bm25plus",
+          "dense"
+        ],
+        "rrf_k": 60,
+        "candidate_k": 100
+      },
+      "mean_fusion_latency_ms": 0.0911694564759576,
+      "mean_end_to_end_query_latency_ms": 60.44775595303994
+    }
+  },
+  "notes": [
+    "Results are merged by method; rerunning one method does not erase unrelated method results.",
+    "Use the training split for weight tuning and the test split for final comparison.",
+    "Title-weighted BM25 independently min-max-normalizes title and abstract scores per query; default title weight is 0.35.",
+    "Weighted RRF uses weight 1.0 for the lexical/SPLADE source and --dense-weight for dense Qwen3 when present.",
+    "DBSF approximates distribution-based score fusion over each retriever's top candidate_k results, not full-corpus score distributions.",
+    "Dense query latency includes Qwen3 query embedding; fusion end-to-end latency adds the measured component query latencies and fusion overhead."
+  ]
+}

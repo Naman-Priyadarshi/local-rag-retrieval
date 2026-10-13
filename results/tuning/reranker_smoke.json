@@ -1,0 +1,66 @@
+{
+  "dataset": "BEIR SciFact",
+  "qrels_split": "train",
+  "documents": 5183,
+  "queries_evaluated": 20,
+  "top_k": 10,
+  "candidate_k": 200,
+  "candidate_source": {
+    "retrievers": [
+      "bm25plus",
+      "dense"
+    ],
+    "fusion": "weighted_rrf",
+    "rrf_k": 60,
+    "weights": {
+      "bm25plus": 1.0,
+      "dense": 7.0
+    }
+  },
+  "reranker": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "rerank_k": 200,
+    "batch_size": 16,
+    "max_length": 512,
+    "device": "cpu",
+    "setup_seconds_including_model_load": 8.551929875000496
+  },
+  "candidate_generation": {
+    "metrics_at_top_k": {
+      "nDCG@10": 0.5581191555905384,
+      "Recall@10": 0.65,
+      "MRR@10": 0.5305555555555556,
+      "evaluated_queries": 20
+    },
+    "Recall@200": 0.9,
+    "bm25plus_setup_seconds": 0.34522891599772265,
+    "dense_setup_seconds": 3.248474833002547,
+    "dense_cache_hit": true
+  },
+  "reranked": {
+    "metrics_at_top_k": {
+      "nDCG@10": 0.43587801516274033,
+      "Recall@10": 0.55,
+      "MRR@10": 0.4,
+      "evaluated_queries": 20
+    },
+    "Recall@200": 0.9
+  },
+  "latency": {
+    "mean_bm25plus_query_ms": 11.594735399557976,
+    "p95_bm25plus_query_ms": 17.419760097618564,
+    "mean_dense_query_ms": 26.694137500453508,
+    "p95_dense_query_ms": 30.205927405768307,
+    "mean_fusion_ms": 0.12947494979016483,
+    "mean_reranker_query_ms": 3408.0862645510933,
+    "p95_reranker_query_ms": 3728.565358353444,
+    "mean_end_to_end_query_ms": 3446.504612400895,
+    "p95_end_to_end_query_ms": 3768.9606857511535
+  },
+  "notes": [
+    "Reranking changes the order of retrieved candidates; it cannot recover relevant documents absent from the candidate pool.",
+    "Candidate generation uses BM25Plus + Qwen3 weighted RRF; dense_weight and candidate_k are explicit in the output.",
+    "If rerank_k is lower than candidate_k, unscored candidates retain their original order after the reranked prefix.",
+    "Use the training split for model/configuration choices. Test scores are exploratory after repeated test-set comparisons."
+  ]
+}

@@ -1,0 +1,39 @@
+# Downloaded datasets and generated artifacts
+data/
+dataset/
+
+# Temporary files
+*.tmp
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+
+# Compiled source
+*.pyc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment
+.env/
+
+# Conda environment
+.conda/
+
+# PyCharm project files
+.idea/
+
+# VS Code project files
+.vscode/
+
+# Jupyter Notebook output
+*.nbconvert.ipynb
+
+# Backup files
+*.bak
+
+# Miscellaneous
+*.swp

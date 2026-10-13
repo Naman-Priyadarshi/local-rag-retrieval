@@ -1,0 +1,37 @@
+{
+  "dataset": "BEIR SciFact",
+  "top_k": 10,
+  "documents": 5183,
+  "queries": 300,
+  "retrievers": {
+    "splade": {
+      "model": "rasyosef/splade-mini",
+      "metrics": {
+        "nDCG@10": 0.6564684297585247,
+        "Recall@10": 0.7712777777777777,
+        "MRR@10": 0.630021164021164,
+        "evaluated_queries": 300
+      },
+      "setup_seconds_including_model_load": 2.076152917004947,
+      "cache_hit": true,
+      "mean_query_latency_ms_after_warmup": 181.52611996013243,
+      "p95_query_latency_ms_after_warmup": 183.52236844693834,
+      "total_evaluation_seconds": 54.459637874999316
+    },
+    "bm25": {
+      "model": "rank_bm25.BM25Okapi",
+      "metrics": {
+        "nDCG@10": 0.6518925893260478,
+        "Recall@10": 0.7739999999999999,
+        "MRR@10": 0.6186150793650793,
+        "evaluated_queries": 300
+      },
+      "setup_seconds_including_model_load": 0.5864692079994711,
+      "cache_hit": false,
+      "mean_query_latency_ms_after_warmup": 17.22071872963473,
+      "p95_query_latency_ms_after_warmup": 29.745693746735927,
+      "total_evaluation_seconds": 5.167393624993565
+    }
+  },
+  "note": "Local benchmark. Scores depend on tokenization and document formatting; use the same protocol for every retriever."
+}
